@@ -1,5 +1,5 @@
 import textwrap
-import re # Importado para limpar o CPF
+import re
 
 def menu():
     menu_texto = """\n
@@ -15,11 +15,6 @@ def menu():
     return input(textwrap.dedent(menu_texto))
 
 def depositar(saldo, valor, extrato, /):
-    """
-    Realiza a operação de depósito.
-    Argumentos são passados apenas por posição.
-    Retorna o saldo e o extrato atualizados.
-    """
     if valor > 0:
         saldo += valor
         extrato += f"Depósito:\tR$ {valor:.2f}\n"
@@ -55,20 +50,12 @@ def sacar(*, saldo, valor, extrato, limite, numero_saques, limite_saques):
     return saldo, extrato, numero_saques
 
 def exibir_extrato(saldo, /, *, extrato):
-    """
-    Exibe o extrato da conta.
-    'saldo' é posicional e 'extrato' é por nome (keyword-only).
-    """
     print("\n================ EXTRATO ================")
     print("Não foram realizadas movimentações." if not extrato else extrato)
     print(f"\nSaldo:\t\tR$ {saldo:.2f}")
     print("==========================================")
 
 def criar_usuario(usuarios):
-    """
-    Cria um novo usuário (cliente) e o armazena na lista de usuários.
-    Não permite CPFs duplicados e armazena apenas os números do CPF.
-    """
     cpf = input("Informe o CPF (somente números): ")
     cpf = re.sub(r'\D', '', cpf)
     
@@ -86,12 +73,10 @@ def criar_usuario(usuarios):
     print("\n=== Usuário criado com sucesso! ===")
 
 def filtrar_usuario(cpf, usuarios):
-    """Filtra e retorna um usuário da lista com base no CPF."""
     usuarios_filtrados = [usuario for usuario in usuarios if usuario["cpf"] == cpf]
     return usuarios_filtrados[0] if usuarios_filtrados else None
 
 def criar_conta_corrente(agencia, numero_conta, usuarios, contas):
-    """Cria uma nova conta corrente vinculada a um usuário existente."""
     cpf = input("Informe o CPF do usuário para vincular a conta: ")
     cpf = re.sub(r'\D', '', cpf)
 
@@ -107,7 +92,6 @@ def criar_conta_corrente(agencia, numero_conta, usuarios, contas):
     return None
 
 def listar_contas(contas):
-    """Exibe uma lista de todas as contas cadastradas."""
     if not contas:
         print("\n@@@ Nenhuma conta cadastrada. @@@")
         return
@@ -124,7 +108,6 @@ def listar_contas(contas):
 
 
 def main():
-    """Função principal que executa o sistema bancário."""
     LIMITE_SAQUES = 3
     AGENCIA = "0001"
 
